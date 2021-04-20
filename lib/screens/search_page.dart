@@ -12,11 +12,11 @@ class SearchPage extends StatelessWidget {
     final verse = _controller.foundedVerses[index];
     return Card(
       child: ListTile(
-        subtitle: Text(
+        subtitle: SelectableText(
           verse.text,
           style: kTextStyle,
         ),
-        title: Text(
+        title: SelectableText(
           verse.surah,
           style: kTextStyle,
         ),
@@ -65,9 +65,11 @@ class SearchPage extends StatelessWidget {
                       ),
                       Expanded(
                         child: Obx(
-                          () => ListView.builder(
-                            itemCount: _controller.foundedVerses.length,
-                            itemBuilder: itemBuilder,
+                          () => Scrollbar(
+                            child: ListView.builder(
+                              itemCount: _controller.foundedVerses.length,
+                              itemBuilder: itemBuilder,
+                            ),
                           ),
                         ),
                       )
