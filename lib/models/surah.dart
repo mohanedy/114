@@ -4,30 +4,20 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 
 class Surah {
-  int _ayahCount;
-  String _name;
-  int _index;
-  Map<String, dynamic> _verses;
-  String _surahPath;
+  int ayahCount;
+  String name;
+  int index;
+  Map<String, dynamic> verses;
+  String surahPath;
 
-  Surah(this._surahPath);
+  Surah(this.surahPath);
 
   Future<void> initSurah() async {
-    String surah = await rootBundle.loadString(_surahPath);
+    String surah = await rootBundle.loadString(surahPath);
     var decodedSurah = jsonDecode(surah);
-    _ayahCount = decodedSurah['count'] as int;
-    _verses = decodedSurah['verse'] as Map<String, dynamic>;
-    _index = int.parse(decodedSurah['index']);
-    _name = decodedSurah['name'] as String;
+    ayahCount = decodedSurah['count'] as int;
+    verses = decodedSurah['verse'] as Map<String, dynamic>;
+    index = int.parse(decodedSurah['index']);
+    name = decodedSurah['name'] as String;
   }
-
-  String get surahPath => _surahPath;
-
-  Map<String, dynamic> get verses => _verses;
-
-  int get index => _index;
-
-  String get name => _name;
-
-  int get ayahCount => _ayahCount;
 }

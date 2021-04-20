@@ -1,34 +1,59 @@
-import '../models/surah.dart';
-import '../models/verse.dart';
+import 'package:get/get.dart';
+import 'package:get/get_rx/src/rx_workers/utils/debouncer.dart';
+import 'package:quran_count/controllers/base_controller.dart';
+import 'package:quran_count/enums/view_state.dart';
+import 'package:quran_count/models/surah.dart';
+import 'package:quran_count/models/verse.dart';
 
-class SearchBrain {
+class SearchController extends BaseController {
   List<Surah> surahList = [];
-  int repeated;
+  final foundedVerses = <Verse>[].obs;
+  final _debouncer = Debouncer(delay: Duration(milliseconds: 300));
+  final _repeated = 0.obs;
+
+  int get repeatCount => _repeated.value;
+
+  @override
+  void onInit() async {
+    // TODO: implement onInit
+    super.onInit();
+    setState(ViewState.busy);
+    await loadSurah();
+    setState(ViewState.idle);
+  }
 
   Future<void> loadSurah() async {
     for (int i = 1; i < 114; i++) {
-      Surah s = Surah('assets/surah_$i.json');
-      await s.initSurah();
-      surahList.add(s);
+      final surah = Surah('assets/surah_$i.json');
+      await surah.initSurah();
+      surahList.add(surah);
     }
   }
 
-  Future<List<Verse>> searchByWord(String word) async {
-    repeated = 0;
-    String normalisedWord = normalise(word);
-    List<Verse> verses = [];
-    for (var s in surahList) {
-      for (int i = 1; i < s.ayahCount + 1; i++) {
-        for (String vWord in s.verses['verse_$i'].toString().split(" ")) {
-          String normalisedVWord = normalise(vWord);
-          if (normalisedVWord == normalisedWord) {
-            repeated++;
-            verses.add(Verse(i, s.verses['verse_$i'].toString(), s.name));
-          }
-        }
+  searchByWord(String word) async {
+    setState(ViewState.busy);
+    _debouncer.call(() {
+      _repeated.value = 0;
+      foundedVerses.clear();
+      if (word.trim().length >= 2) {
+        String normalisedWord = normalise(word);
+        surahList.forEach((surah) {
+          surah.verses.forEach((key, value) {
+            int verseNumber = int.parse(key.split('_')[1]);
+            if (verseNumber > 0) {
+              String normalisedVWord = normalise(value);
+              if (normalisedVWord.contains(normalisedWord)) {
+                _repeated.value += 1;
+                verseNumber = verseNumber == 0 ? 1 : verseNumber;
+                foundedVerses.add(Verse(
+                    verseNumber, surah.verses[key].toString(), surah.name));
+              }
+            }
+          });
+        });
       }
-    }
-    return verses;
+    });
+    setState(ViewState.idle);
   }
 
   String normalise(String input) => input

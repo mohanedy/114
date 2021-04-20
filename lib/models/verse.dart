@@ -1,15 +1,7 @@
-class Verse{
-  int _num;
-  String _text;
-  String _surah;
+class Verse {
+  int num;
+  String text;
+  String surah;
 
-  Verse(this._num, this._text, this._surah);
-
-  String get surah => _surah;
-
-  String get text => _text;
-
-  int get num => _num;
-
-
+  Verse(this.num, this.text, this.surah);
 }
