@@ -1,5 +1,5 @@
-import 'surah.dart';
-import 'verse.dart';
+import '../models/surah.dart';
+import '../models/verse.dart';
 
 class SearchBrain {
   List<Surah> surahList = [];
@@ -11,7 +11,6 @@ class SearchBrain {
       await s.initSurah();
       surahList.add(s);
     }
-
   }
 
   Future<List<Verse>> searchByWord(String word) async {
@@ -99,17 +98,9 @@ class SearchBrain {
       .replaceAll('\u065D', '') //ARABIC REVERSED DAMMA
       .replaceAll('\u065E', '') //ARABIC FATHA WITH TWO DOTS
       .replaceAll('\u065F', '')
-
-
       .replaceAll('\u0624', '\u0648')
-
-
       .replaceAll('\u0629', '\u0647')
-
-
       .replaceAll('\u0626', '\u0649')
-
-
       .replaceAll('\u0622', '\u0627')
       .replaceAll('\u0671', '\u0627')
       .replaceAll('\u0656', '\u0627')

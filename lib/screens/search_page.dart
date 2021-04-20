@@ -3,7 +3,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:quran_count/component/rounded_numbers.dart';
 import 'package:quran_count/constants.dart';
 import 'package:quran_count/services/search_brain.dart';
-import 'package:quran_count/services/verse.dart';
+import 'package:quran_count/models/verse.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shake_event/shake_event.dart';
 
@@ -48,7 +48,6 @@ class _SearchPageState extends State<SearchPage> with ShakeHandler {
             color: Colors.white,
           ),
           descStyle: kTextStyle,
-
         ),
         buttons: [
           DialogButton(
@@ -107,52 +106,53 @@ class _SearchPageState extends State<SearchPage> with ShakeHandler {
   @override
   Widget build(BuildContext context) {
     startListeningShake(30);
-    return SafeArea(
-        child: Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          children: <Widget>[
-            loadIndicator(),
-            TextField(
-              onSubmitted: (s) {
-                setState(() {
-                  load = true;
-                });
-                updateUI(s);
-                setState(() {
-                  load = false;
-                });
-              },
-              decoration: InputDecoration(
-                hintText: 'كلمة البحث',
-                suffixIcon: Icon(
-                  Icons.search,
+    return Scaffold(
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            children: <Widget>[
+              loadIndicator(),
+              TextField(
+                onSubmitted: (s) {
+                  setState(() {
+                    load = true;
+                  });
+                  updateUI(s);
+                  setState(() {
+                    load = false;
+                  });
+                },
+                decoration: InputDecoration(
+                  hintText: 'كلمة البحث',
+                  suffixIcon: Icon(
+                    Icons.search,
+                  ),
                 ),
               ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Card(
-              child: ListTile(
-                title: Text(
-                  'تكررت $repeated',
-                  textAlign: TextAlign.center,
-                  style: kTextStyle,
+              SizedBox(
+                height: 10,
+              ),
+              Card(
+                child: ListTile(
+                  title: Text(
+                    'تكررت $repeated',
+                    textAlign: TextAlign.center,
+                    style: kTextStyle,
+                  ),
+                  enabled: true,
                 ),
-                enabled: true,
               ),
-            ),
-            Expanded(
-              child: ListView.builder(
-                itemCount: verses.length,
-                itemBuilder: itemBuilder,
-              ),
-            )
-          ],
+              Expanded(
+                child: ListView.builder(
+                  itemCount: verses.length,
+                  itemBuilder: itemBuilder,
+                ),
+              )
+            ],
+          ),
         ),
       ),
-    ));
+    );
   }
 }

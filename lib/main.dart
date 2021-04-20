@@ -29,6 +29,7 @@ class MyApp extends StatelessWidget {
           0xFFEA1556,
         ),
       ),
+      debugShowCheckedModeBanner: false,
       home: LoadingScreen(),
     );
   }
