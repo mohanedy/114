@@ -1,11 +1,11 @@
 {
-    "name": "quran_search",
-    "short_name": "quran_search",
+    "name": "114 Quran Search",
+    "short_name": "114",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "Holy Quran Search App.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
