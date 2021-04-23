@@ -29,7 +29,6 @@
 - [Built With](#built-with)
 - [Creator](#creator)
 - [Thanks](#thanks)
-- [Copyright and license](#copyright-and-license)
 
 ## Quick start
 
@@ -52,8 +51,3 @@ This app is for **Searching** By **Word** and getting the **Surah & the Ayah whe
 
 Thanks to [semarketir](https://github.com/semarketir/quranjson) for Providing Quran in JSON Format
 
-## Copyright and license
-
-Code and documentation copyright 2019 the authors. Code released under the MIT License.
-
-Enjoy
